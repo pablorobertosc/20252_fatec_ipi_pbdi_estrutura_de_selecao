@@ -14,35 +14,67 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
--- 1.1 IF
+-- 1.2 Faça um programa que exibe se um número inteiro é múltiplo de 3 ou de 5.
+-- 1.2 IF 
 DO $$
 DECLARE
     n INT := valor_aleatorio_entre(1, 100);
 BEGIN
     RAISE NOTICE 'Número gerado: %', n;
-    IF n % 3 = 0 THEN
-        RAISE NOTICE 'É múltiplo de 3';
+    IF n % 3 = 0 OR n % 5 = 0 THEN
+        RAISE NOTICE 'É múltiplo de 3 ou de 5';
     ELSE
-        RAISE NOTICE 'Não é múltiplo de 3';
+        RAISE NOTICE 'Não é múltiplo de 3 nem de 5';
     END IF;
 END;
 $$;
 
--- 1.1 CASE
+
+-- 1.2 CASE
 DO $$
 DECLARE
     n INT := valor_aleatorio_entre(1, 100);
 BEGIN
     RAISE NOTICE 'Número gerado: %', n;
     CASE
-        WHEN n % 3 = 0 THEN
-            RAISE NOTICE 'É múltiplo de 3';
+        WHEN n % 3 = 0 OR n % 5 = 0 THEN
+            RAISE NOTICE 'É múltiplo de 3 ou de 5';
         ELSE
-            RAISE NOTICE 'Não é múltiplo de 3';
+            RAISE NOTICE 'Não é múltiplo de 3 nem de 5';
     END CASE;
 END;
 $$;
+
+
+-- 1.1 Faça um programa que exibe se um número inteiro é múltiplo de 3.
+-- -- 1.1 IF
+-- DO $$
+-- DECLARE
+--     n INT := valor_aleatorio_entre(1, 100);
+-- BEGIN
+--     RAISE NOTICE 'Número gerado: %', n;
+--     IF n % 3 = 0 THEN
+--         RAISE NOTICE 'É múltiplo de 3';
+--     ELSE
+--         RAISE NOTICE 'Não é múltiplo de 3';
+--     END IF;
+-- END;
+-- $$;
+
+-- -- 1.1 CASE
+-- DO $$
+-- DECLARE
+--     n INT := valor_aleatorio_entre(1, 100);
+-- BEGIN
+--     RAISE NOTICE 'Número gerado: %', n;
+--     CASE
+--         WHEN n % 3 = 0 THEN
+--             RAISE NOTICE 'É múltiplo de 3';
+--         ELSE
+--             RAISE NOTICE 'Não é múltiplo de 3';
+--     END CASE;
+-- END;
+-- $$;
 
 
 
