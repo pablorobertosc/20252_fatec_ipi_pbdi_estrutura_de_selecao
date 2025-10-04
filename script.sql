@@ -1,3 +1,50 @@
+-- 1 Exercícios
+-- Nota. Para cada exercício, produza duas soluções: uma que utilize apenas IF e suas
+-- variações e outra que use apenas CASE e suas variações.
+-- Nota. Para cada exercício, gere valores aleatórios conforme a necessidade. Use a função
+-- do Bloco de Código 1.1.
+-- Bloco de Código 1.1
+CREATE OR REPLACE FUNCTION valor_aleatorio_entre(
+    lim_inferior INT,
+    lim_superior INT
+) RETURNS INT AS
+$$
+BEGIN
+    RETURN FLOOR(RANDOM() * (lim_superior - lim_inferior + 1) + lim_inferior)::INT;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- 1.1 IF
+DO $$
+DECLARE
+    n INT := valor_aleatorio_entre(1, 100);
+BEGIN
+    RAISE NOTICE 'Número gerado: %', n;
+    IF n % 3 = 0 THEN
+        RAISE NOTICE 'É múltiplo de 3';
+    ELSE
+        RAISE NOTICE 'Não é múltiplo de 3';
+    END IF;
+END;
+$$;
+
+-- 1.1 CASE
+DO $$
+DECLARE
+    n INT := valor_aleatorio_entre(1, 100);
+BEGIN
+    RAISE NOTICE 'Número gerado: %', n;
+    CASE
+        WHEN n % 3 = 0 THEN
+            RAISE NOTICE 'É múltiplo de 3';
+        ELSE
+            RAISE NOTICE 'Não é múltiplo de 3';
+    END CASE;
+END;
+$$;
+
+
 
 -- testar
 -- 22/10/2022: válida
@@ -10,61 +57,61 @@
 -- centenas := 253 / 100 = 2
 -- dezenas := 253 % 100 / 50 = 1
 
-DO $$
-DECLARE
-    data INT := 31062021;  
-    dia INT;
-    mes INT;
-    ano INT;
-    data_valida  BOOL := TRUE;
-BEGIN
-    dia := data / 1000000;
-    mes := (data % 1000000) / 10000;
-    ano := (data % 1000000) % 10000;
+-- DO $$
+-- DECLARE
+--     data INT := 31062021;  
+--     dia INT;
+--     mes INT;
+--     ano INT;
+--     data_valida  BOOL := TRUE;
+-- BEGIN
+--     dia := data / 1000000;
+--     mes := (data % 1000000) / 10000;
+--     ano := (data % 1000000) % 10000;
 
-    RAISE NOTICE '%/%/%', dia, mes, ano;
+--     RAISE NOTICE '%/%/%', dia, mes, ano;
 
-    -- Validação do ano
-    IF ano >= 1 THEN
-        CASE
-            -- Verifica limites básicos de mês e dia
-            WHEN mes > 12 OR mes < 1 OR dia < 1 OR dia > 31 THEN
-                data_valida := FALSE;
+--     -- Validação do ano
+--     IF ano >= 1 THEN
+--         CASE
+--             -- Verifica limites básicos de mês e dia
+--             WHEN mes > 12 OR mes < 1 OR dia < 1 OR dia > 31 THEN
+--                 data_valida := FALSE;
 
-            ELSE
-                -- Meses com 30 dias
-                IF (mes IN (4, 6, 9, 11) AND dia > 30) THEN
-                    data_valida := FALSE;
+--             ELSE
+--                 -- Meses com 30 dias
+--                 IF (mes IN (4, 6, 9, 11) AND dia > 30) THEN
+--                     data_valida := FALSE;
 
-                -- Fevereiro e anos bissextos
-                ELSIF mes = 2 THEN
-                    CASE
-                        -- Ano bissexto
-                        WHEN ((ano % 4 = 0 AND ano % 100 <> 0) OR ano % 400 = 0) THEN
-                            IF dia > 29 THEN
-                                data_valida := FALSE;
-                            END IF;
+--                 -- Fevereiro e anos bissextos
+--                 ELSIF mes = 2 THEN
+--                     CASE
+--                         -- Ano bissexto
+--                         WHEN ((ano % 4 = 0 AND ano % 100 <> 0) OR ano % 400 = 0) THEN
+--                             IF dia > 29 THEN
+--                                 data_valida := FALSE;
+--                             END IF;
 
-                        -- Ano comum
-                        ELSE
-                            IF dia > 28 THEN
-                                data_valida := FALSE;
-                            END IF;
-                    END CASE;
-                END IF;
-        END CASE;
-    ELSE
-        data_valida := FALSE;
-    END IF;
+--                         -- Ano comum
+--                         ELSE
+--                             IF dia > 28 THEN
+--                                 data_valida := FALSE;
+--                             END IF;
+--                     END CASE;
+--                 END IF;
+--         END CASE;
+--     ELSE
+--         data_valida := FALSE;
+--     END IF;
 
-        CASE
-        WHEN data_valida THEN
-            RAISE NOTICE 'Data válida';
-        ELSE
-            RAISE NOTICE 'Data inválida';
-    END CASE;
-END;
-$$;
+--         CASE
+--         WHEN data_valida THEN
+--             RAISE NOTICE 'Data válida';
+--         ELSE
+--             RAISE NOTICE 'Data inválida';
+--     END CASE;
+-- END;
+-- $$;
 
 
 
