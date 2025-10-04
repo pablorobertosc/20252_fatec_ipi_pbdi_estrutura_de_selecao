@@ -14,36 +14,106 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- 1.2 Faça um programa que exibe se um número inteiro é múltiplo de 3 ou de 5.
--- 1.2 IF 
+-- 1.3 Faça um programa que opera de acordo com o seguinte menu.
+-- Opções:
+-- 1 - Soma
+-- 2 - Subtração
+-- 3 - Multiplicação
+-- 4 - Divisão
+-- Cada operação envolve dois números inteiros. O resultado deve ser exibido no formato
+-- op1 op op2 = res
+-- Exemplo:
+-- 2 + 3 = 5
+
+-- 1.3 IF
 DO $$
 DECLARE
-    n INT := valor_aleatorio_entre(1, 100);
+    op INT := valor_aleatorio_entre(1, 4);
+    n1 INT := valor_aleatorio_entre(1, 20);
+    n2 INT := valor_aleatorio_entre(1, 20);
+    res NUMERIC;
 BEGIN
-    RAISE NOTICE 'Número gerado: %', n;
-    IF n % 3 = 0 OR n % 5 = 0 THEN
-        RAISE NOTICE 'É múltiplo de 3 ou de 5';
+    RAISE NOTICE 'Operação escolhida: %', op;
+
+    IF op = 1 THEN
+        res := n1 + n2;
+        RAISE NOTICE '% + % = %', n1, n2, res;
+    ELSIF op = 2 THEN
+        res := n1 - n2;
+        RAISE NOTICE '% - % = %', n1, n2, res;
+    ELSIF op = 3 THEN
+        res := n1 * n2;
+        RAISE NOTICE '% * % = %', n1, n2, res;
     ELSE
-        RAISE NOTICE 'Não é múltiplo de 3 nem de 5';
+        res := n1::NUMERIC / n2;
+        RAISE NOTICE '% / % = %', n1, n2, res;
     END IF;
 END;
 $$;
 
 
--- 1.2 CASE
+-- 1.3 CASE
 DO $$
 DECLARE
-    n INT := valor_aleatorio_entre(1, 100);
+    op INT := valor_aleatorio_entre(1, 4);
+    n1 INT := valor_aleatorio_entre(1, 20);
+    n2 INT := valor_aleatorio_entre(1, 20);
+    res NUMERIC;
 BEGIN
-    RAISE NOTICE 'Número gerado: %', n;
-    CASE
-        WHEN n % 3 = 0 OR n % 5 = 0 THEN
-            RAISE NOTICE 'É múltiplo de 3 ou de 5';
+    RAISE NOTICE 'Operação escolhida: %', op;
+    CASE op
+        WHEN 1 THEN
+            res := n1 + n2;
+            RAISE NOTICE '% + % = %', n1, n2, res;
+        WHEN 2 THEN
+            res := n1 - n2;
+            RAISE NOTICE '% - % = %', n1, n2, res;
+        WHEN 3 THEN
+            res := n1 * n2;
+            RAISE NOTICE '% * % = %', n1, n2, res;
+        WHEN 4 THEN
+            res := n1::NUMERIC / n2;
+            RAISE NOTICE '% / % = %', n1, n2, res;
         ELSE
-            RAISE NOTICE 'Não é múltiplo de 3 nem de 5';
+            RAISE NOTICE 'Opção inválida';
     END CASE;
 END;
 $$;
+
+
+
+
+
+-- 1.2 Faça um programa que exibe se um número inteiro é múltiplo de 3 ou de 5.
+-- 1.2 IF 
+-- DO $$
+-- DECLARE
+--     n INT := valor_aleatorio_entre(1, 100);
+-- BEGIN
+--     RAISE NOTICE 'Número gerado: %', n;
+--     IF n % 3 = 0 OR n % 5 = 0 THEN
+--         RAISE NOTICE 'É múltiplo de 3 ou de 5';
+--     ELSE
+--         RAISE NOTICE 'Não é múltiplo de 3 nem de 5';
+--     END IF;
+-- END;
+-- $$;
+
+
+-- -- 1.2 CASE
+-- DO $$
+-- DECLARE
+--     n INT := valor_aleatorio_entre(1, 100);
+-- BEGIN
+--     RAISE NOTICE 'Número gerado: %', n;
+--     CASE
+--         WHEN n % 3 = 0 OR n % 5 = 0 THEN
+--             RAISE NOTICE 'É múltiplo de 3 ou de 5';
+--         ELSE
+--             RAISE NOTICE 'Não é múltiplo de 3 nem de 5';
+--     END CASE;
+-- END;
+-- $$;
 
 
 -- 1.1 Faça um programa que exibe se um número inteiro é múltiplo de 3.
