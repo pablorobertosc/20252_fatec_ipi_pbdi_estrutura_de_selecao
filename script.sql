@@ -14,6 +14,46 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- 1.4 Um comerciante comprou um produto e quer vendê-lo com um lucro de 45% se o valor
+-- da compra for menor que R$20. Caso contrário, ele deseja lucro de 30%. Faça um
+-- programa que, dado o valor do produto, calcula o valor de venda.
+
+
+-- 1.4 IF   
+DO $$
+DECLARE
+    preco_compra NUMERIC := valor_aleatorio_entre(5, 50);
+    preco_venda NUMERIC;
+BEGIN
+    RAISE NOTICE 'Preço de compra: R$% ', preco_compra;
+    IF preco_compra < 20 THEN
+        preco_venda := preco_compra * 1.45;
+    ELSE
+        preco_venda := preco_compra * 1.30;
+    END IF;
+    RAISE NOTICE 'Preço de venda: R$% ', preco_venda;
+END;
+$$;
+
+
+-- 1.4 CASE
+DO $$
+DECLARE
+    preco_compra NUMERIC := valor_aleatorio_entre(5, 50);
+    preco_venda NUMERIC;
+BEGIN
+    RAISE NOTICE 'Preço de compra: R$% ', preco_compra;
+    CASE
+        WHEN preco_compra < 20 THEN
+            preco_venda := preco_compra * 1.45;
+        ELSE
+            preco_venda := preco_compra * 1.30;
+    END CASE;
+    RAISE NOTICE 'Preço de venda: R$% ', preco_venda;
+END;
+$$;
+
+
 -- 1.3 Faça um programa que opera de acordo com o seguinte menu.
 -- Opções:
 -- 1 - Soma
@@ -25,60 +65,60 @@ $$ LANGUAGE plpgsql;
 -- Exemplo:
 -- 2 + 3 = 5
 
--- 1.3 IF
-DO $$
-DECLARE
-    op INT := valor_aleatorio_entre(1, 4);
-    n1 INT := valor_aleatorio_entre(1, 20);
-    n2 INT := valor_aleatorio_entre(1, 20);
-    res NUMERIC;
-BEGIN
-    RAISE NOTICE 'Operação escolhida: %', op;
+-- -- 1.3 IF
+-- DO $$
+-- DECLARE
+--     op INT := valor_aleatorio_entre(1, 4);
+--     n1 INT := valor_aleatorio_entre(1, 20);
+--     n2 INT := valor_aleatorio_entre(1, 20);
+--     res NUMERIC;
+-- BEGIN
+--     RAISE NOTICE 'Operação escolhida: %', op;
 
-    IF op = 1 THEN
-        res := n1 + n2;
-        RAISE NOTICE '% + % = %', n1, n2, res;
-    ELSIF op = 2 THEN
-        res := n1 - n2;
-        RAISE NOTICE '% - % = %', n1, n2, res;
-    ELSIF op = 3 THEN
-        res := n1 * n2;
-        RAISE NOTICE '% * % = %', n1, n2, res;
-    ELSE
-        res := n1::NUMERIC / n2;
-        RAISE NOTICE '% / % = %', n1, n2, res;
-    END IF;
-END;
-$$;
+--     IF op = 1 THEN
+--         res := n1 + n2;
+--         RAISE NOTICE '% + % = %', n1, n2, res;
+--     ELSIF op = 2 THEN
+--         res := n1 - n2;
+--         RAISE NOTICE '% - % = %', n1, n2, res;
+--     ELSIF op = 3 THEN
+--         res := n1 * n2;
+--         RAISE NOTICE '% * % = %', n1, n2, res;
+--     ELSE
+--         res := n1::NUMERIC / n2;
+--         RAISE NOTICE '% / % = %', n1, n2, res;
+--     END IF;
+-- END;
+-- $$;
 
 
--- 1.3 CASE
-DO $$
-DECLARE
-    op INT := valor_aleatorio_entre(1, 4);
-    n1 INT := valor_aleatorio_entre(1, 20);
-    n2 INT := valor_aleatorio_entre(1, 20);
-    res NUMERIC;
-BEGIN
-    RAISE NOTICE 'Operação escolhida: %', op;
-    CASE op
-        WHEN 1 THEN
-            res := n1 + n2;
-            RAISE NOTICE '% + % = %', n1, n2, res;
-        WHEN 2 THEN
-            res := n1 - n2;
-            RAISE NOTICE '% - % = %', n1, n2, res;
-        WHEN 3 THEN
-            res := n1 * n2;
-            RAISE NOTICE '% * % = %', n1, n2, res;
-        WHEN 4 THEN
-            res := n1::NUMERIC / n2;
-            RAISE NOTICE '% / % = %', n1, n2, res;
-        ELSE
-            RAISE NOTICE 'Opção inválida';
-    END CASE;
-END;
-$$;
+-- -- 1.3 CASE
+-- DO $$
+-- DECLARE
+--     op INT := valor_aleatorio_entre(1, 4);
+--     n1 INT := valor_aleatorio_entre(1, 20);
+--     n2 INT := valor_aleatorio_entre(1, 20);
+--     res NUMERIC;
+-- BEGIN
+--     RAISE NOTICE 'Operação escolhida: %', op;
+--     CASE op
+--         WHEN 1 THEN
+--             res := n1 + n2;
+--             RAISE NOTICE '% + % = %', n1, n2, res;
+--         WHEN 2 THEN
+--             res := n1 - n2;
+--             RAISE NOTICE '% - % = %', n1, n2, res;
+--         WHEN 3 THEN
+--             res := n1 * n2;
+--             RAISE NOTICE '% * % = %', n1, n2, res;
+--         WHEN 4 THEN
+--             res := n1::NUMERIC / n2;
+--             RAISE NOTICE '% / % = %', n1, n2, res;
+--         ELSE
+--             RAISE NOTICE 'Opção inválida';
+--     END CASE;
+-- END;
+-- $$;
 
 
 
